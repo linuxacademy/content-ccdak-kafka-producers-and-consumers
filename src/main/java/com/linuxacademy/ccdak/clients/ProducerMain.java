@@ -19,7 +19,11 @@ public class ProducerMain {
         Producer<String, String> producer = new KafkaProducer<>(props);
         
         for (int i = 0; i < 100; i++) {
-            ProducerRecord record = new ProducerRecord<>("test_topic", 0, "count", Integer.toString(i));
+            int partition = 0;
+            if (i > 49) {
+                partition = 1;
+            }
+            ProducerRecord record = new ProducerRecord<>("test_count", partition, "count", Integer.toString(i));
             producer.send(record, (RecordMetadata metadata, Exception e) -> {
                 if (e != null) {
                     System.out.println("Error publishing message: " + e.getMessage());
