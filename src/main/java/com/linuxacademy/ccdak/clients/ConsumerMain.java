@@ -21,7 +21,7 @@ public class ConsumerMain {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, String> record : records) {
-                System.out.println("offset=" + record.offset() + ", key=" + record.key() + ", value=" + record.value());
+                System.out.println("key=" + record.key() + ", value=" + record.value() + ", topic=" + record.topic() + ", partition=" + record.partition() + ", offset=" + record.offset());
             }
             consumer.commitSync();
         }  
